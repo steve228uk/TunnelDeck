@@ -11,7 +11,7 @@ import {
   showContextMenu,
   staticClasses,
 } from "decky-frontend-lib";
-import { VFC } from "react";
+import { VFC, useEffect } from "react";
 import { FaShip } from "react-icons/fa";
 
 import logo from "../assets/logo.png";
@@ -21,7 +21,7 @@ import logo from "../assets/logo.png";
 //   right: number;
 // }
 
-const Content: VFC<{ serverAPI: ServerAPI }> = ({}) => {
+const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   // const [result, setResult] = useState<number | undefined>();
 
   // const onClick = async () => {
@@ -36,6 +36,15 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({}) => {
   //     setResult(result.result);
   //   }
   // };
+
+  const loadConnections = async () => {
+    const result = await serverAPI.callPluginMethod('show', {});
+    console.log(result);
+  }
+
+  useEffect(() => {
+    loadConnections();
+  }, []);
 
   return (
     <PanelSection title="Panel Section">
@@ -95,7 +104,7 @@ export default definePlugin((serverApi: ServerAPI) => {
   });
 
   return {
-    title: <div className={staticClasses.Title}>Example Plugin</div>,
+    title: <div className={staticClasses.Title}>TunnelDeck</div>,
     content: <Content serverAPI={serverApi} />,
     icon: <FaShip />,
     onDismount() {

@@ -8,7 +8,7 @@ specifiers:
   '@rollup/plugin-typescript': ^8.3.3
   '@types/react': 16.14.0
   '@types/webpack': ^5.28.0
-  decky-frontend-lib: ^3.6.1
+  decky-frontend-lib: ^3.7.3
   react-icons: ^4.4.0
   rollup: ^2.77.1
   rollup-plugin-import-assets: ^1.1.1
@@ -17,7 +17,7 @@ specifiers:
   typescript: ^4.7.4
 
 dependencies:
-  decky-frontend-lib: 3.6.1
+  decky-frontend-lib: 3.7.3
   react-icons: 4.4.0
 
 devDependencies:
@@ -418,8 +418,8 @@ packages:
     resolution: {integrity: sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==}
     dev: true
 
-  /decky-frontend-lib/3.6.1:
-    resolution: {integrity: sha512-NBlltn4EktqFgD1fj2AU0ccJJNMNgcqCnmhYd34Z5xR7ypGNT2oSqfSvFIlzU4WbDL9RyrcHSJlSMdYk6n4NXA==}
+  /decky-frontend-lib/3.7.3:
+    resolution: {integrity: sha512-HFHI19zr3gzOXDBF0DE9W+ZSx+mtjc/XqCYANoVfpMaDX1ITZpk2lMzBGuh9QvtHZ4LygtYEPIWDlrJDs8rGKA==}
     dependencies:
       minimist: 1.2.7
     dev: false
