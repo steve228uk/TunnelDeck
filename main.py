@@ -11,7 +11,9 @@ logger.setLevel(logging.DEBUG) # can be changed to logging.DEBUG for debugging i
 
 
 class Plugin:
-    # A normal method. It can be called from JavaScript using call_plugin_function("method_1", argument1, argument2)
+
+    # Lists the connections from network manager.
+    # If defive is ---- 
     async def show(self):
         result = subprocess.run(["nmcli", "connection", "show"], text=True, capture_output=True).stdout
         connections = result.splitlines()
@@ -23,7 +25,7 @@ class Plugin:
                 "name": components[0],
                 "uuid": components[1],
                 "type": components[2],
-                "device": components[3]
+                "connected": False if components[3] == '--' else True
             }
 
         mapped = map(mapper, connections)
