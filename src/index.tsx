@@ -25,13 +25,21 @@ type Connection = {
 
 const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
 
+  const [ loaded, setLoaded ] = useState(false);
   const [ connections, setConnections ] = useState<Connection[]>([]);
 
   const loadConnections = async () => {
     const response = await serverAPI.callPluginMethod<{}, Connection[]>('show', {});
     const connections = response.result as Connection[];
-    const filtered = connections.filter((connection) => ['vpn', 'wireguard'].includes(connection.type));
+    const filtered = connections
+    .filter((connection) =>['vpn', 'wireguard'].includes(connection.type))
+    .sort((a, b) => {
+      if(a.name < b.name) return -1;
+      if(a.name > b.name) return 1;
+      return 0;
+    });
     setConnections(filtered);
+    setLoaded(true);
   }
 
   const toggleConnection = async (connection: Connection, switchValue: boolean) => {
@@ -46,7 +54,12 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
 
   return (
     <PanelSection title="Connections">
-      {connections.map((connection) => (
+
+      {loaded && connections.length == 0 && <PanelSectionRow>
+        No Connections Found
+      </PanelSectionRow>}
+
+      {connections.length > 0 && connections.map((connection) => (
         <PanelSectionRow>
           <ToggleField
           bottomSeparator='standard'
@@ -58,6 +71,7 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
           }} />
         </PanelSectionRow>
       ))}
+
     </PanelSection>
   );
 };
