@@ -7,13 +7,12 @@ logging.basicConfig(filename="/tmp/tunneldeck.log",
                     filemode='w+',
                     force=True)
 logger=logging.getLogger()
-logger.setLevel(logging.DEBUG) # can be changed to logging.DEBUG for debugging issues
-
+logger.setLevel(logging.INFO)
 
 class Plugin:
 
     # Lists the connections from network manager.
-    # If defive is ---- 
+    # If device is -- then it's disconnected.
     async def show(self):
         result = subprocess.run(["nmcli", "connection", "show"], text=True, capture_output=True).stdout
         connections = result.splitlines()
@@ -31,11 +30,14 @@ class Plugin:
         mapped = map(mapper, connections)
         return list(mapped)
 
-    # Asyncio-compatible long-running code, executed in a task when the plugin is loaded
-    #async def _main(self):
+    # Establishes a connection to a VPN
+    async def up(self, uuid):
+        logger.info("OPENING connection to: " + uuid)
+        result = subprocess.run(["nmcli", "connection", "up", uuid], text=True, capture_output=True).stdout
+        return result
 
-    
-    # Function called first during the unload process, utilize this to handle your plugin being removed
-    async def _unload(self):
-        logger.info("Goodbye World!")
-        pass
+    # Closes a connection to a VPN
+    async def down(self, uuid):
+        logger.info("CLOSING connection to: " + uuid)
+        result = subprocess.run(["nmcli", "connection", "down", uuid], text=True, capture_output=True).stdout
+        return result
