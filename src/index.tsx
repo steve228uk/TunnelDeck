@@ -52,7 +52,7 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
           bottomSeparator='standard'
           checked={connection.connected}
           label={connection.name}
-          description={`Type: ${connection.type}, UUID: ${connection.uuid}`}
+          description={`Type: ${connection.type}`}
           onChange={(switchValue: boolean) => {
             toggleConnection(connection, switchValue);
           }} />
