@@ -10,7 +10,7 @@ logger=logging.getLogger()
 logger.setLevel(logging.INFO)
 
 # Run the install script for the OpenVPN extension
-subprocess.run("bash", os.path.dirname(__file__) + "/extensions/install")
+subprocess.run(["bash", os.path.dirname(__file__) + "/extensions/install"])
 
 class Plugin:
 
@@ -47,5 +47,5 @@ class Plugin:
 
     # Clean-up on aisle 5
     async def _unload(self):
-        subprocess.run("bash", os.path.dirname(__file__) + "/extensions/uninstall")
+        subprocess.run(["bash", os.path.dirname(__file__) + "/extensions/uninstall"])
         pass
