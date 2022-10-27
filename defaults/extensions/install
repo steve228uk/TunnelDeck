@@ -6,8 +6,8 @@ if $(pacman -Qi networkmanager-openvpn &>/dev/null); then
   exit 0
 fi
 
-OVPN_EXTENSION_SRC="/home/deck/homebrew/plugins/TunnelDeck/extensions/networkmanager-openvpn.raw"
-OVPN_EXTENSION_DEST="/var/lib/extensions/networkmanager-openvpn.raw"
+OVPN_EXTENSION_SRC="/home/deck/homebrew/plugins/TunnelDeck/extensions/networkmanager-openvpn-3.3.2.raw"
+OVPN_EXTENSION_DEST="/var/lib/extensions/networkmanager-openvpn-3.3.2.raw"
 
 mkdir -p /var/lib/extensions >/dev/null 2>&1
 
@@ -21,3 +21,6 @@ if [ ! $(systemctl is-active --quiet systemd-sysext) ]; then
   /usr/share/libalpm/scripts/systemd-hook sysusers
   /usr/share/libalpm/scripts/systemd-hook reload dbus
 fi
+
+# Refresh the merge just in case it was unmerged manually
+systemd-sysext refresh
