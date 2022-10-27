@@ -4,7 +4,9 @@ import {
   PanelSectionRow,
   ServerAPI,
   staticClasses,
-  ToggleField
+  ToggleField,
+  ButtonItem,
+  Router
 } from "decky-frontend-lib";
 
 import {
@@ -14,7 +16,6 @@ import {
 } from "react";
 
 import { FaShieldAlt } from "react-icons/fa";
-
 
 type Connection = {
   name: string,
@@ -43,9 +44,7 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   }
 
   const toggleConnection = async (connection: Connection, switchValue: boolean) => {
-    const response = await serverAPI.callPluginMethod((switchValue) ? 'up' : 'down', { uuid: connection.uuid });
-    console.log(response);
-    // Send a toast?
+    await serverAPI.callPluginMethod((switchValue) ? 'up' : 'down', { uuid: connection.uuid });
   }
 
   useEffect(() => {
@@ -72,14 +71,17 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
         </PanelSectionRow>
       ))}
 
+      <PanelSectionRow>
+        <ButtonItem onClick={() => Router.NavigateToExternalWeb('https://github.com/steve228uk/TunnelDeck#readme')}>
+          How Do I Add Connections?
+        </ButtonItem>
+      </PanelSectionRow>
+
     </PanelSection>
   );
 };
 
 export default definePlugin((serverApi: ServerAPI) => {
-
-  // TODO: check here if a VPN connection is active and send a toast
-
   return {
     title: <div className={staticClasses.Title}>TunnelDeck</div>,
     content: <Content serverAPI={serverApi} />,
