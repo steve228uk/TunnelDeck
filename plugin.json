@@ -1,10 +1,10 @@
 {
   "name": "TunnelDeck",
   "author": "Stephen Radford",
-  "flags": ["debug", "root"],
+  "flags": ["root"],
   "publish": {
     "tags": ["vpn", "root"],
-    "description": "Enables VPN support within Gaming Mode.",
+    "description": "Enables VPN support within Gaming Mode and activates OpenVPN support for Network Manager.",
     "image": "https://opengraph.githubassets.com/1/SteamDeckHomebrew/PluginLoader"
   }
 }

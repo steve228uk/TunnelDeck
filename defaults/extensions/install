@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Check if the networkmanager-openvpn package has been installed manually.
+# If it has been then we can skip the mounting of the plugin provided image.
+if $(pacman -Qi networkmanager-openvpn &>/dev/null); then
+  exit 0
+fi
+
+OVPN_EXTENSION_SRC="/home/deck/homebrew/plugins/TunnelDeck/extensions/networkmanager-openvpn.raw"
+OVPN_EXTENSION_DEST="/var/lib/extensions/networkmanager-openvpn.raw"
+
+sudo mkdir -p /var/lib/extensions >/dev/null 2>&1
+
+if [ ! -f "$OVPN_EXTENSION_DEST" ]; then
+  sudo ln -s $OVPN_EXTENSION_SRC $OVPN_EXTENSION_DEST
+fi
+
+if [ ! $(systemctl is-active --quiet systemd-sysext) ]; then
+  sudo systemctl enable systemd-sysext
+  sudo systemctl start systemd-sysext
+  sudo /usr/share/libalpm/scripts/systemd-hook sysusers
+  sudo /usr/share/libalpm/scripts/systemd-hook reload dbus
+fi
