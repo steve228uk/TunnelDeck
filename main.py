@@ -44,3 +44,8 @@ class Plugin:
         logger.info("CLOSING connection to: " + uuid)
         result = subprocess.run(["nmcli", "connection", "down", uuid], text=True, capture_output=True).stdout
         return result
+
+    # Clean-up on aisle 5
+    async def _unload(self):
+        subprocess.run("bash", os.path.dirname(__file__) + "/extensions/uninstall")
+        pass
