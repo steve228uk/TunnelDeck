@@ -13,13 +13,13 @@ mkdir -p /var/lib/extensions >/dev/null 2>&1
 
 if [ ! -f "$OVPN_EXTENSION_DEST" ]; then
   ln -s $OVPN_EXTENSION_SRC $OVPN_EXTENSION_DEST
+  /usr/share/libalpm/scripts/systemd-hook sysusers
+  /usr/share/libalpm/scripts/systemd-hook reload dbus
 fi
 
 if [ ! $(systemctl is-active --quiet systemd-sysext) ]; then
   systemctl enable systemd-sysext
   systemctl start systemd-sysext
-  /usr/share/libalpm/scripts/systemd-hook sysusers
-  /usr/share/libalpm/scripts/systemd-hook reload dbus
 fi
 
 # Refresh the merge just in case it was unmerged manually
