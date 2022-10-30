@@ -1,5 +1,2 @@
 #!/bin/bash
-rm /var/lib/extensions/networkmanager-openvpn-3.3.2.raw
-systemd-sysext refresh
-/usr/share/libalpm/scripts/systemd-hook sysusers
-/usr/share/libalpm/scripts/systemd-hook reload dbus
+rm /var/lib/extensions/networkmanager-openvpn.raw
