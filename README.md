@@ -1,14 +1,18 @@
 # TunnelDeck [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ZU74G2NJzk)
 
+// SCREENSHOT HERE
+
 TunnelDeck allows you to access any OpenVPN or WireGuard connections from the Network Manager. Any connections that are added in desktop mode or from the command line will be available to connect to from the TunnelDeck menu.
+
+TunnelDeck installs the OpenVPN package for Network manager as a [system extension](https://man.archlinux.org/man/systemd-sysext.8.en). This means that your file system can remain read only and `pacman` does not need to be configured.
 
 If you want to get in contact with the developers, we can be found in the **[SteamDeckHomebrew Discord](https://discord.gg/ZU74G2NJzk)**.
 
-## Disclaimer
+## ⚠️ Disclaimer ⚠️
 
-Using a VPN to access Steam is against their terms of service and the developers of TunnelDeck take no responsibility for any action Valve may take against your account. It's unlikely that you will be banned but we'd recommend avoiding purchasing games while connected to the VPN.
+Using a VPN to access Steam is **against their terms of service** and the developers of TunnelDeck take no responsibility for any action Valve may take against your account. While it's unlikely that you will be banned but we'd recommend avoiding purchasing games while connected to the VPN.
 
-You will also likely be logged out from Steam and will need to log back in if you remain connected to their servers while using a VPN.
+**Note:** You will also likely be logged out from Steam and will need to log back in if you remain connected to their servers while using a VPN.
 
 ## Usage
 
