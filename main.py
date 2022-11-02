@@ -10,7 +10,7 @@ logger=logging.getLogger()
 logger.setLevel(logging.INFO)
 
 # Run the install script for the OpenVPN extension
-subprocess.run(["bash", os.path.dirname(__file__) + "/extensions/install"])
+subprocess.run(["bash", os.path.dirname(__file__) + "/extensions/install"], cwd=os.path.dirname(__file__) + "/extensions")
 
 class Plugin:
 

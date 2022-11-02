@@ -6,12 +6,10 @@ if $(pacman -Qi networkmanager-openvpn &>/dev/null); then
   exit 0
 fi
 
-pushd /home/deck/homebrew/plugins/TunnelDeck/extensions/
-
 OS_ID="ID=steamos"
 VERSION_ID=$(grep VERSION_ID /etc/os-release)
 EXTENSION_RELEASE="./networkmanager-openvpn/usr/lib/extension-release.d/extension-release.networkmanager-openvpn"
-OVPN_EXTENSION_SRC="/home/deck/homebrew/plugins/TunnelDeck/extensions/networkmanager-openvpn.raw"
+OVPN_EXTENSION_SRC="$PWD/networkmanager-openvpn.raw"
 OVPN_EXTENSION_DEST="/var/lib/extensions/networkmanager-openvpn.raw"
 
 # Download the packages
@@ -48,5 +46,3 @@ if [ ! $(systemctl is-active --quiet systemd-sysext) ]; then
   /usr/share/libalpm/scripts/systemd-hook reload dbus
   systemctl restart NetworkManager
 fi
-
-popd
