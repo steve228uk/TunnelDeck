@@ -43,7 +43,7 @@ fi
 if [ ! $(systemctl is-active --quiet systemd-sysext) ]; then
   systemctl enable systemd-sysext
   systemctl start systemd-sysext
-  systemd-sysext merge
+  systemd-sysext refresh
   /usr/share/libalpm/scripts/systemd-hook sysusers
   /usr/share/libalpm/scripts/systemd-hook reload dbus
   systemctl restart NetworkManager
