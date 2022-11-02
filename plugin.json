@@ -5,6 +5,6 @@
   "publish": {
     "tags": ["vpn", "root"],
     "description": "Enables VPN support within Gaming Mode and activates OpenVPN support for Network Manager.",
-    "image": "https://opengraph.githubassets.com/1/SteamDeckHomebrew/PluginLoader"
+    "image": "https://user-images.githubusercontent.com/1169297/199478837-e3676b09-50a4-463b-ba03-46974d96537c.png"
   }
 }

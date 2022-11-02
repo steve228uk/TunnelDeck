@@ -1,6 +1,6 @@
 # TunnelDeck [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ZU74G2NJzk)
 
-// SCREENSHOT HERE
+![TunnelDeck Screenshot](https://user-images.githubusercontent.com/1169297/199478837-e3676b09-50a4-463b-ba03-46974d96537c.png)
 
 TunnelDeck allows you to access any OpenVPN or WireGuard connections from the Network Manager. Any connections that are added in desktop mode or from the command line will be available to connect to from the TunnelDeck menu.
 
@@ -22,13 +22,13 @@ Connecting to a VPN in TunnelDeck currently requires it to be setup in desktop m
 
 From desktop mode, open the **System Settings** and select **Connections** in the **Network** section from the sidebar.
 
-// PHOTO OF PANEL
-
 To create a new VPN connection, click the **+** button and scroll down to the **Other** section. Select the **Import VPN connection...** option and select the `.conf` or `.ovpn` file provided by your VPN provider.
 
-// PHOTO OF PLUS PANEL
+![Import VPN connection…](https://user-images.githubusercontent.com/1169297/199479273-7b0164bd-2dd0-4779-9c18-304615f07a72.png)
 
 Some VPN connections required a username and password. These should be entered in the **VPN** tab of the newly created connection. It's important that the **Store password for all users (not encrypted)** option is selected as TunnelDeck establishes the VPN connection as the root user.
+
+![Store password for all users (not encrypted)](https://user-images.githubusercontent.com/1169297/199479268-5b775a63-fc17-4c99-afec-fb4c8daa01d4.png)
 
 ### Connecting to a VPN
 
