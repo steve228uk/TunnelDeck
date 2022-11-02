@@ -6,8 +6,33 @@ if $(pacman -Qi networkmanager-openvpn &>/dev/null); then
   exit 0
 fi
 
+pushd /home/deck/homebrew/plugins/TunnelDeck/extensions/
+
+OS_ID="ID=steamos"
+VERSION_ID=$(grep VERSION_ID /etc/os-release)
+EXTENSION_RELEASE="./networkmanager-openvpn/usr/lib/extension-release.d/extension-release.networkmanager-openvpn"
 OVPN_EXTENSION_SRC="/home/deck/homebrew/plugins/TunnelDeck/extensions/networkmanager-openvpn.raw"
 OVPN_EXTENSION_DEST="/var/lib/extensions/networkmanager-openvpn.raw"
+
+# Download the packages
+if [ ! -f "./networkmanager-openvpn-1.8.16-1-x86_64.pkg.tar.zst" ]; then
+  wget -i ./openvpn.list
+  mkdir networkmanager-openvpn
+  tar --use-compress-program=unzstd -xvf networkmanager-openvpn-1.8.16-1-x86_64.pkg.tar.zst -C networkmanager-openvpn
+  mkdir -p ./networkmanager-openvpn/usr/lib/extension-release.d/
+  touch $EXTENSION_RELEASE
+fi
+
+# Check if the current VERSION_ID of the OS matches, if not we need to make an image
+if [ ! $(grep -q $VERSION_ID $EXTENSION_RELEASE) ]; then
+  rm $OVPN_EXTENSION_SRC
+  rm $EXTENSION_RELEASE
+  touch $EXTENSION_RELEASE
+  echo $OS_ID > $EXTENSION_RELEASE
+  echo $VERSION_ID >> $EXTENSION_RELEASE
+  chown -R root:root networkmanager-openvpn
+  mksquashfs networkmanager-openvpn $OVPN_EXTENSION_SRC
+fi
 
 mkdir -p /var/lib/extensions >/dev/null 2>&1
 
@@ -21,5 +46,7 @@ if [ ! $(systemctl is-active --quiet systemd-sysext) ]; then
   systemd-sysext merge
   /usr/share/libalpm/scripts/systemd-hook sysusers
   /usr/share/libalpm/scripts/systemd-hook reload dbus
-  systemctl restart MetworkManager
+  systemctl restart NetworkManager
 fi
+
+popd
