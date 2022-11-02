@@ -8,7 +8,7 @@ TunnelDeck installs the OpenVPN package for Network manager as a [system extensi
 
 If you want to get in contact with the developers, we can be found in the **[SteamDeckHomebrew Discord](https://discord.gg/ZU74G2NJzk)**.
 
-## ⚠️ Disclaimer ⚠️
+## :warning: Disclaimer :warning:
 
 Using a VPN to access Steam is **against their terms of service** and the developers of TunnelDeck take no responsibility for any action Valve may take against your account. While it's unlikely that you will be banned but we'd recommend avoiding purchasing games while connected to the VPN.
 
