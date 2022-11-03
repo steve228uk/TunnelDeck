@@ -58,7 +58,7 @@ class Plugin:
         if connection == None:
             return None
 
-        result = subprocess.run(["nmcli", "connection", "show", connection["uuid"], "|", "grep", "ipv6.metho"], text=True, capture_output=True).stdout
+        result = subprocess.run(["nmcli", "connection", "show", connection["uuid"], "|", "grep", "ipv6.method"], text=True, capture_output=True).stdout
         connection["ipv6_disabled"] = True if "disabled" in result else False
         return connection
 
