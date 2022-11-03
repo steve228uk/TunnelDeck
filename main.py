@@ -32,15 +32,24 @@ def get_active_connection():
     mapped = map(connection_mapper, connections)
     return next(filter(lambda xn: xn["type"] == 'wifi' or xn["type"] == 'ethernet', mapped), None)
 
+def run_install_script():
+    logger.info("Running Install Script")
+    subprocess.run(["bash", path.dirname(__file__) + "/extensions/install"], cwd=path.dirname(__file__) + "/extensions")
+
+def run_uninstall_script():
+    logger.info("Running Uninstall Script")
+    subprocess.run(["bash", path.dirname(__file__) + "/extensions/uninstall"], cwd=path.dirname(__file__) + "/extensions")
+
 class Plugin:
 
-    settings: SettingsManager
+    settings: SettingsManager = SettingsManager("tunneldeck", path.join(HOMEBREW_PATH, "settings"))
 
     async def _main(self):
-        self.settings = SettingsManager("tunneldeck", path.join(HOMEBREW_PATH, "settings"))
+        logger.info("Loading OpenVPN setting")
         openvpn_enabled = self.settings.getSetting("openvpn_enabled", False)
         if openvpn_enabled:
-            self.enable_openvpn(self)
+            logger.info("OpenVPN enabled: " + "yes" if openvpn_enabled else "no")
+            run_install_script()
 
     # Lists the connections from network manager.
     # If device is -- then it's disconnected.
@@ -101,14 +110,16 @@ class Plugin:
 
     # Enable OpenVPN
     async def enable_openvpn(self):
+        logger.info("Enabling OpenVPN")
         self.settings.setSetting("openvpn_enabled", True)
-        subprocess.run(["bash", path.dirname(__file__) + "/extensions/install"], cwd=path.dirname(__file__) + "/extensions")
+        run_install_script()
         return True
 
     # Disable OpenVPN
     async def disable_openvpn(self):
+        logger.info("Disabling OpenVPN")
         self.settings.setSetting("openvpn_enabled", False)
-        subprocess.run(["bash", path.dirname(__file__) + "/extensions/uninstall"], cwd=path.dirname(__file__) + "/extensions")
+        run_uninstall_script()
         return True
 
     # Clean-up on aisle 5
