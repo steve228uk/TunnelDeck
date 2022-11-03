@@ -1,2 +1,4 @@
 #!/bin/bash
 rm /var/lib/extensions/networkmanager-openvpn.raw
+systemd-sysext refresh
+systemctl restart NetworkManager

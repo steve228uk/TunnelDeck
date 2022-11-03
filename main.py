@@ -1,6 +1,12 @@
 import subprocess
 import logging
-import os
+from os import path
+from settings import SettingsManager
+from helpers import get_user
+
+USER = get_user()
+HOME_PATH = "/home/" + USER
+HOMEBREW_PATH = HOME_PATH + "/homebrew"
 
 logging.basicConfig(filename="/tmp/tunneldeck.log",
                     format='[TunnelDeck] %(asctime)s %(levelname)s %(message)s',
@@ -8,9 +14,6 @@ logging.basicConfig(filename="/tmp/tunneldeck.log",
                     force=True)
 logger=logging.getLogger()
 logger.setLevel(logging.INFO)
-
-# Run the install script for the OpenVPN extension
-subprocess.run(["bash", os.path.dirname(__file__) + "/extensions/install"], cwd=os.path.dirname(__file__) + "/extensions")
 
 def connection_mapper(xn):
     components = xn.split()
@@ -30,6 +33,14 @@ def get_active_connection():
     return next(filter(lambda xn: xn["type"] == 'wifi' or xn["type"] == 'ethernet', mapped), None)
 
 class Plugin:
+
+    settings: SettingsManager
+
+    async def _main(self):
+        self.settings = SettingsManager("tunneldeck", path.join(HOMEBREW_PATH, "settings"))
+        openvpn_enabled = self.settings.getSetting("openvpn_enabled", False)
+        if openvpn_enabled:
+            self.enable_openvpn(self)
 
     # Lists the connections from network manager.
     # If device is -- then it's disconnected.
@@ -84,7 +95,23 @@ class Plugin:
         subprocess.run(["systemctl", "restart", "NetworkManager"])
         return True
 
+    # The OpenVPN setting
+    async def is_openvpn_enabled(self):
+        return self.settings.getSetting("openvpn_enabled", False)
+
+    # Enable OpenVPN
+    async def enable_openvpn(self):
+        self.settings.setSetting("openvpn_enabled", True)
+        subprocess.run(["bash", path.dirname(__file__) + "/extensions/install"], cwd=path.dirname(__file__) + "/extensions")
+        return True
+
+    # Disable OpenVPN
+    async def disable_openvpn(self):
+        self.settings.setSetting("openvpn_enabled", False)
+        subprocess.run(["bash", path.dirname(__file__) + "/extensions/uninstall"], cwd=path.dirname(__file__) + "/extensions")
+        return True
+
     # Clean-up on aisle 5
     async def _unload(self):
-        subprocess.run(["bash", os.path.dirname(__file__) + "/extensions/uninstall"], cwd=os.path.dirname(__file__) + "/extensions")
+        subprocess.run(["bash", path.dirname(__file__) + "/extensions/uninstall"], cwd=path.dirname(__file__) + "/extensions")
         pass
