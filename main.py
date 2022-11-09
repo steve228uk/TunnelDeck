@@ -3,6 +3,7 @@ import logging
 from os import path
 from settings import SettingsManager
 from helpers import get_user
+import re
 
 USER = get_user()
 HOME_PATH = "/home/" + USER
@@ -16,7 +17,7 @@ logger=logging.getLogger()
 logger.setLevel(logging.INFO)
 
 def connection_mapper(xn):
-    components = xn.split()
+    components = re.split(r'\s{2,}', xn)
     return {
         "name": components[0],
         "uuid": components[1],
