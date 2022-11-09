@@ -120,7 +120,10 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
         ))}
 
         <PanelSectionRow>
-          <ButtonItem onClick={() => Router.NavigateToExternalWeb('https://github.com/steve228uk/TunnelDeck#readme')}>
+          <ButtonItem onClick={() => {
+            Router.NavigateToExternalWeb('https://github.com/steve228uk/TunnelDeck#readme');
+            Router.CloseSideMenus();
+          }}>
             How Do I Add Connections?
           </ButtonItem>
         </PanelSectionRow>
