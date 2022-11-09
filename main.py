@@ -104,6 +104,14 @@ class Plugin:
         subprocess.run(["systemctl", "restart", "NetworkManager"])
         return True
 
+    # Checks if the OpenVPN package is installed
+    async def is_openvpn_pacman_installed(self):
+        try:
+            subprocess.run(["pacman", "-Qi", "networkmanager-openvpn"], check=True)
+            return True
+        except subprocess.CalledProcessError:
+            return False
+
     # The OpenVPN setting
     async def is_openvpn_enabled(self):
         return self.settings.getSetting("openvpn_enabled", False)

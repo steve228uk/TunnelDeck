@@ -32,6 +32,7 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   const [ activeConnection, setActiveConnection ] = useState<Connection>();
   const [ ipv6Disabled, setIpv6Disabled ] = useState(false);
   const [ openVPNEnabled, setOpenVPNEnabled ] = useState(false);
+  const [ openVPNDisabled, setOpenVPNDisabled ] = useState(false);
 
   const loadConnections = async () => {
 
@@ -45,10 +46,19 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
     }
 
     try {
-      const openVPNEnabledResponse = await serverAPI.callPluginMethod<{}, boolean>('is_openvpn_enabled', {});
-      setOpenVPNEnabled(openVPNEnabledResponse.result as boolean);
+      const openVPNDisabled = await serverAPI.callPluginMethod<{}, boolean>('is_openvpn_pacman_installed', {});
+      setOpenVPNDisabled(openVPNDisabled.result as boolean);
     } catch (error) {
       console.error(error);
+    }
+
+    if(!openVPNDisabled) {
+      try {
+        const openVPNEnabledResponse = await serverAPI.callPluginMethod<{}, boolean>('is_openvpn_enabled', {});
+        setOpenVPNEnabled(openVPNEnabledResponse.result as boolean);
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     try {
@@ -120,9 +130,9 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
         <PanelSectionRow>
           <ToggleField
           bottomSeparator='standard'
-          checked={openVPNEnabled}
+          checked={openVPNEnabled || openVPNDisabled}
           label='Enable OpenVPN'
-          disabled={!loaded}
+          disabled={!loaded || openVPNDisabled}
           description='Installs OpenVPN support for Network Manager'
           onChange={toggleOpenVPN} />
         </PanelSectionRow>
