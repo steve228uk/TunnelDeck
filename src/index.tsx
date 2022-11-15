@@ -6,13 +6,18 @@ import {
   staticClasses,
   ToggleField,
   ButtonItem,
-  Router
+  Router,
+  findModuleChild,
+  afterPatch,
+  wrapReactType
 } from "decky-frontend-lib";
 
 import {
   VFC,
   useEffect,
-  useState
+  useState,
+  ReactElement,
+  memo
 } from "react";
 
 import { FaShieldAlt } from "react-icons/fa";
@@ -155,6 +160,27 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
 };
 
 export default definePlugin((serverApi: ServerAPI) => {
+
+  const header = findModuleChild((m) => {
+    if (typeof m !== 'object') return undefined;
+    for (let prop in m) {
+      if(m[prop]?.type?.toString().includes("quickAccessHeader")) {
+        return m[prop];
+      }
+    }
+  });
+
+  afterPatch(header, 'type', (_: Record<string, unknown>[], ret: ReactElement) => {
+    wrapReactType(ret?.props?.children);
+
+    ret.props?.children?.[1]?.props.children.splice(1, 0, (
+      <a>VPN</a>
+    ));
+
+    return ret;
+
+  });
+
   return {
     title: <div className={staticClasses.Title}>TunnelDeck</div>,
     content: <Content serverAPI={serverApi} />,
