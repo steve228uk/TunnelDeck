@@ -13,10 +13,10 @@ OVPN_EXTENSION_SRC="$PWD/networkmanager-openvpn.raw"
 OVPN_EXTENSION_DEST="/var/lib/extensions/networkmanager-openvpn.raw"
 
 # Download the packages
-if [ ! -f "./networkmanager-openvpn-1.8.16-1-x86_64.pkg.tar.zst" ]; then
+if [ ! -f "./networkmanager-openvpn-1.10.0-1-x86_64.pkg.tar.zst" ]; then
   wget -i ./openvpn.list
   mkdir networkmanager-openvpn
-  tar --use-compress-program=unzstd -xvf networkmanager-openvpn-1.8.16-1-x86_64.pkg.tar.zst -C networkmanager-openvpn
+  tar --use-compress-program=unzstd -xvf networkmanager-openvpn-1.10.0-1-x86_64.pkg.tar.zst -C networkmanager-openvpn
   mkdir -p ./networkmanager-openvpn/usr/lib/extension-release.d/
   touch $EXTENSION_RELEASE
 fi
