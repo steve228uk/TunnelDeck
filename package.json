@@ -1,6 +1,6 @@
 {
   "name": "tunneldeck",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Enables VPN support within Gaming Mode.",
   "scripts": {
     "build": "shx rm -rf dist && rollup -c",
