@@ -6,7 +6,7 @@ import {
   staticClasses,
   ToggleField,
   ButtonItem,
-  Router
+  Navigation
 } from "decky-frontend-lib";
 
 import {
@@ -121,8 +121,8 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
 
         <PanelSectionRow>
           <ButtonItem onClick={() => {
-            Router.NavigateToExternalWeb('https://github.com/steve228uk/TunnelDeck#readme');
-            Router.CloseSideMenus();
+            Navigation.NavigateToExternalWeb('https://github.com/steve228uk/TunnelDeck#readme');
+            Navigation.CloseSideMenus();
           }}>
             How Do I Add Connections?
           </ButtonItem>
