@@ -35,6 +35,9 @@ Some VPN connections required a username and password. These should be entered i
 
 ![Store password for all users (not encrypted)](https://user-images.githubusercontent.com/1169297/199479268-5b775a63-fc17-4c99-afec-fb4c8daa01d4.png)
 
+### Importing Wireguard Connection
+From Desktop Mode, open a terminal and type `nmcli connection import type wireguard file wireguard.conf` where `wireguard.conf` is your configuration file. Note: the name of this file cannot be large or you will get an error. Once this is done it should show it is successfully imported. Exit Desktop Mode and check TunnelDeck.
+
 ### Connecting to a VPN
 
 Once the connection has been created and saved in Desktop Mode, TunnelDeck is ready to be used in Gaming Mode.
